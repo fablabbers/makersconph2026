@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakersCon PH 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            background: #ffffff;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #00d4ff 0%, #f7931e 100%);
+            color: #ffffff;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.15);
+            filter: drop-shadow(2px 2px 0px #00d4ff);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        nav a {
+            color: #eeeef4;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            color: #00d4ff;
+        }
+        
+        .hero {
+            height: 100vh;
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #1a1a2e;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+            filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.2));
+        }
+        
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            color: #1a1a2e;
+            text-shadow: 2px 2px 0px #00d4ff, 4px 4px 0px rgba(0,0,0,0.1);
+        }
+        
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #1a1a2e;
+            font-weight: 700;
+            text-shadow: 1px 1px 0px #00d4ff;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 3px solid #1a1a2e;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 0;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+            background: #00d4ff;
+            color: #1a1a2e;
+        }
+        
+        .btn-primary:hover {
+            background: #fff44f;
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: #faf8f3;
+            color: #1a1a2e;
+            border: 3px solid #1a1a2e;
+        }
+        
+        .btn-secondary:hover {
+            background: #ff6b35;
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+        }
+        
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        .section h2 {
+            font-size: 48px;
+            margin-bottom: 60px;
+            text-align: center;
+            color: #1a1a2e;
+            text-shadow: 2px 2px 0px #ff6b35;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 0;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            border: 3px solid #00d4ff;
+            position: relative;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: #ff6b35;
+            z-index: -1;
+            border-radius: 0;
+        }
+        
+        .card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
+        }
+        
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #1a1a2e;
+        }
+        
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .about {
+            background: #ff6b35;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            text-align: left;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0px #ff6b35;
+        }
+        
+        .about-text p {
+            color: #1a1a2e;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        footer {
+            background: #1a1a2e;
+            color: #ff6b35;
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 4px solid #ff6b35;
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .section h2 {
+                font-size: 36px;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">MakersCon PH 2026</div>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>MakersCon PH 2026</h1>
+            <p>Sharing Knowledge, Sharing Futures</p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary">Register Now</button>
+                <button class="btn btn-secondary">Learn More</button>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="about" style="background-image: url('images/sparks_01.jpg'); background-size: cover; background-position: center;">
+        <div class="section">
+            <h2>About</h2>
+        </div>
+    </section>
+    
+    <section id="events">
+        <div class="section">
+            <h2>Events</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Talks</h3>
+                    <p>[talks description]</p>
+                </div>
+                <div class="card">
+                    <h3>Workshops</h3>
+                    <p>[workshops description]</p>
+                </div>
+                <div class="card">
+                    <h3>Exhibitions</h3>
+                    <p>[exhibitions description]</p>
+                </div>
+                <div class="card">
+                    <h3>Latagan</h3>
+                    <p>[latagan description]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="contact">
+        <p>&copy; 2026 MakersCon PH. All rights reserved.</p>
+    </footer>
+</body>
+</html>
