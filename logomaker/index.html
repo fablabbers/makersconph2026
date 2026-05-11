@@ -1,0 +1,315 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Riso Tile Maker</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+    canvas {
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    p {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      margin: 0;
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      font-family: Arial, sans-serif;
+      border-radius: 10px;
+      letter-spacing: 0.02em;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <p>1:black;2:orange;3:blue;4:red;5:yellow</p>
+<script>
+let gridSize = 10;
+let cellSize = 60;
+
+let tiles = [];
+let TYPES = ["empty", "square", "quarter", "triangle"];
+
+// Risograph-style palette
+let palette = [
+  "#000000", // black
+  "#ff8717", // orange
+  "#1982c4", // blue,
+  "#ff595e", // red
+  
+  "#FFBE0B", // yellow
+  
+];
+
+let currentColor = 0;
+
+function setup() {
+  //createCanvas(gridSize * cellSize, gridSize * cellSize);
+  createCanvas(windowWidth, windowHeight);
+  calculateGrid();
+  initTiles();
+
+  let saveBtn = createButton("Save Vector SVG");
+  saveBtn.position(20, 20);
+  saveBtn.mousePressed(saveSVGVector);
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+
+  calculateGrid();
+  initTiles();
+}
+
+function calculateGrid() {
+  gridSizeX = ceil(width / cellSize);
+  gridSizeY = ceil(height / cellSize);
+}
+
+function draw() {
+  background("#f5f5f5");
+
+  for (let y = 0; y < gridSizeY; y++) {
+    for (let x = 0; x < gridSizeX; x++) {
+      drawTile(tiles[y][x], x * cellSize, y * cellSize);
+    }
+  }
+}
+
+function initTiles() {
+  tiles = [];
+  for (let y = 0; y < gridSizeY; y++) {
+    let row = [];
+    for (let x = 0; x < gridSizeX; x++) {
+      row.push({
+        type: "empty",
+        rotation: 0,
+        color: 0
+      });
+    }
+    tiles.push(row);
+  }
+}
+
+function drawTile(tile, x, y) {
+  if (tile.type === "empty") return;
+
+  push();
+
+  translate(x + cellSize / 2, y + cellSize / 2);
+  rotate(tile.rotation * HALF_PI);
+  translate(-cellSize / 2, -cellSize / 2);
+
+  fill(palette[tile.color]);
+  noStroke();
+
+  if (tile.type === "square") {
+    rect(0, 0, cellSize, cellSize);
+  }
+
+  if (tile.type === "rounded") {
+    let r = cellSize * 0.33;
+    rect(0, 0, cellSize, cellSize, r);
+  }
+
+  if (tile.type === "quarter") {
+    arc(0, 0, cellSize * 2, cellSize * 2, 0, HALF_PI);
+  }
+
+  if (tile.type === "triangle") {
+  triangle(
+    0, 0,
+    cellSize, 0,
+    0, cellSize
+  );
+}
+
+  pop();
+}
+
+function mousePressed() {
+  /*let x = floor(mouseX / cellSize);
+  let y = floor(mouseY / cellSize);
+
+  if (x >= 0 && x < gridSize && y >= 0 && y < gridSize) {
+    let tile = tiles[y][x];
+
+    let i = TYPES.indexOf(tile.type);
+
+    if (i < TYPES.length - 1) {
+      tile.type = TYPES[i + 1];
+      tile.color = currentColor;
+    } else {
+      tile.type = "empty";
+      tile.rotation = (tile.rotation + 1) % 4;
+    }
+  }*/
+  let x = floor(mouseX / cellSize);
+  let y = floor(mouseY / cellSize);
+
+  if (
+    x >= 0 &&
+    x < gridSizeX &&
+    y >= 0 &&
+    y < gridSizeY
+  ) {
+    let tile = tiles[y][x];
+
+    let i = TYPES.indexOf(tile.type);
+
+    if (i < TYPES.length - 1) {
+      tile.type = TYPES[i + 1];
+      tile.color = currentColor;
+    } else {
+      tile.type = TYPES[0];
+      tile.rotation =
+        (tile.rotation + 1) % 4;
+    }
+  }
+}
+
+function keyPressed() {
+  // Reset
+  if (key === 'r' || key === 'R') {
+    initTiles();
+  }
+
+  // Color selection (1–5)
+  if (key >= '1' && key <= '5') {
+    currentColor = int(key) - 1;
+  }
+
+  // save vector
+  if (key === 'v' || key === 'V') {
+    saveSVGVector();
+  }
+}
+
+function saveSVGVector() {
+
+  let w = gridSize * cellSize;
+  let h = gridSize * cellSize;
+
+  let svg = `
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="${w}"
+       height="${h}"
+       viewBox="0 0 ${w} ${h}">
+  `;
+
+  for (let y = 0; y < gridSize; y++) {
+    for (let x = 0; x < gridSize; x++) {
+
+      let tile = tiles[y][x];
+      if (tile.type === "empty") continue;
+
+      let tx = x * cellSize;
+      let ty = y * cellSize;
+      let color = palette[tile.color];
+
+      svg += `<g transform="
+        translate(${tx + cellSize/2}, ${ty + cellSize/2})
+        rotate(${tile.rotation * 90})
+        translate(${-cellSize/2}, ${-cellSize/2})
+      ">`;
+
+      // square
+      if (tile.type === "square") {
+        svg += `
+          <rect
+            x="0"
+            y="0"
+            width="${cellSize}"
+            height="${cellSize}"
+            fill="${color}"
+          />
+        `;
+      }
+
+      // rounded square
+      if (tile.type === "rounded") {
+        let r = cellSize * 0.3;
+
+        svg += `
+          <rect
+            x="0"
+            y="0"
+            width="${cellSize}"
+            height="${cellSize}"
+            rx="${r}"
+            ry="${r}"
+            fill="${color}"
+          />
+        `;
+      }
+
+      // right triangle
+      if (tile.type === "triangle") {
+        svg += `
+          <polygon
+            points="
+              0,0
+              ${cellSize},0
+              0,${cellSize}
+            "
+            fill="${color}"
+          />
+        `;
+      }
+
+      if (tile.type === "quarter") {
+
+        // radius
+        let r = cellSize;
+
+        // quarter-circle wedge
+        svg += `
+          <path
+            d="
+              M 0 0
+              L ${cellSize} 0
+              A ${r} ${r} 0 0 1 0 ${cellSize}
+              Z
+            "
+            fill="${color}"
+          />
+        `;
+      }
+
+      svg += `</g>`;
+    }
+  }
+
+  svg += `</svg>`;
+
+  const blob = new Blob([svg], {
+    type: "image/svg+xml"
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "tile-composition.svg";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
+```
