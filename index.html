@@ -1,321 +1,422 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MakersCon PH 2026</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MakersCon PH 2026 — November 12-13, 2026</title>
+<meta name="description" content="MakersCon PH 2026 — the Philippines' gathering for hardware hackers, makers, and builders. November 2026, Manila.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          walnut: '#E8DCC8',
+          plywood: '#1E1A16',
+          kerf: '#C9BCA6',
+          primaryOrange: '#FF853C',
+          accentYellow: '#FACC1C',
+          primaryBlue: '#4A90E0',
+        },
+        fontFamily: {
+          body: ['Inter', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace'],
         }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            overflow-x: hidden;
-            background: #ffffff;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #00d4ff 0%, #f7931e 100%);
-            color: #ffffff;
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 3px 3px 0px rgba(0,0,0,0.15);
-            filter: drop-shadow(2px 2px 0px #00d4ff);
-        }
-        
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-        
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 40px;
-        }
-        
-        nav a {
-            color: #eeeef4;
-            text-decoration: none;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-        
-        nav a:hover {
-            color: #00d4ff;
-        }
-        
-        .hero {
-            height: 100vh;
-            
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #1a1a2e;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 20px;
-            filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.2));
-        }
-        
-        .hero h1 {
-            font-size: 72px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-            color: #1a1a2e;
-            text-shadow: 2px 2px 0px #00d4ff, 4px 4px 0px rgba(0,0,0,0.1);
-        }
-        
-        .hero p {
-            font-size: 24px;
-            margin-bottom: 40px;
-            color: #1a1a2e;
-            font-weight: 700;
-            text-shadow: 1px 1px 0px #00d4ff;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 15px 40px;
-            font-size: 16px;
-            font-weight: 600;
-            border: 3px solid #1a1a2e;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 0;
-            box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
-        }
-        
-        .btn-primary {
-            background: #00d4ff;
-            color: #1a1a2e;
-        }
-        
-        .btn-primary:hover {
-            background: #fff44f;
-            transform: translate(-2px, -2px);
-            box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
-        }
-        
-        .btn-secondary {
-            background: #faf8f3;
-            color: #1a1a2e;
-            border: 3px solid #1a1a2e;
-        }
-        
-        .btn-secondary:hover {
-            background: #ff6b35;
-            transform: translate(-2px, -2px);
-            box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
-        }
-        
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-        
-        .section h2 {
-            font-size: 48px;
-            margin-bottom: 60px;
-            text-align: center;
-            color: #1a1a2e;
-            text-shadow: 2px 2px 0px #ff6b35;
-        }
-        
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 0;
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.15);
-            transition: all 0.3s;
-            border: 3px solid #00d4ff;
-            position: relative;
-        }
-        
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: -8px;
-            right: -8px;
-            bottom: -8px;
-            background: #ff6b35;
-            z-index: -1;
-            border-radius: 0;
-        }
-        
-        .card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
-        }
-        
-        .card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #1a1a2e;
-        }
-        
-        .card p {
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        .about {
-            background: #ff6b35;
-        }
-        
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-        
-        .about-text h2 {
-            text-align: left;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 0px #ff6b35;
-        }
-        
-        .about-text p {
-            color: #1a1a2e;
-            line-height: 1.8;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-        
-        footer {
-            background: #1a1a2e;
-            color: #ff6b35;
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 4px solid #ff6b35;
-        }
-        
-        footer p {
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        @media (max-width: 768px) {
-            nav ul {
-                gap: 20px;
-            }
-            
-            .hero h1 {
-                font-size: 48px;
-            }
-            
-            .hero p {
-                font-size: 18px;
-            }
-            
-            .section h2 {
-                font-size: 36px;
-            }
-            
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { 
+    background-color: #1E1A16;
+    letter-spacing: 5%;
+   }
+
+  /* Subtle cut-grid background, like a laser bed on dark acrylic */
+  .cut-grid {
+    background-image:
+      linear-gradient(90deg, rgba(232,220,200,0.07) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(232,220,200,0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .cut-grid-dark {
+    background-image:
+      linear-gradient(90deg, rgba(30,26,22,0.5) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(30,26,22,0.5) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .kerf-outline {
+    border: 1.5px dashed rgba(61,53,46,0.35);
+  }
+  .kerf-outline-light {
+    border: 1.5px dashed rgba(232,220,200,0.35);
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid #E8735C;
+    outline-offset: 2px;
+  }
+
+  /* ===== Modular nesting pieces ===== */
+  .piece {
+    transition: transform 1.5s cubic-bezier(.2,.8,.2,1), opacity 0.3s ease;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .piece:hover {
+      transform: var(--hover-transform, none) !important;
+    }
+    .float-piece {
+      animation: float-piece 7s ease-in-out infinite;
+    }
+    @keyframes float-piece {
+      0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+      50% { transform: translateY(-6px) rotate(var(--rot, 0deg)); }
+    }
+  }
+
+  /* Card hover: lift like a cut piece being lifted off the sheet */
+  .lift-card {
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s ease;
+  }
+  .lift-card:hover {
+    transform: translateY(-6px) rotate(-1deg);
+    box-shadow: 0 16px 32px -12px rgba(43,36,32,0.35);
+  }
+
+  /* Accordion for schedule */
+  .day-toggle[aria-expanded="true"] .chevron {
+    transform: rotate(45deg);
+  }
+  .chevron {
+    transition: transform 0.25s ease;
+  }
+  .day-panel {
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+</style>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">MakersCon PH 2026</div>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#events">Events</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="logomaker/index.html">Logo Maker</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <section class="hero">
-        <div class="hero-content">
-            <h1>MakersCon PH 2026</h1>
-            <p>Sharing Knowledge, Sharing Futures</p>
-            <div class="cta-buttons">
-                <button class="btn btn-primary">Register Now</button>
-                <button class="btn btn-secondary">Learn More</button>
+
+<body class="font-body text-walnut antialiased">
+
+<!-- ===== NAV ===== -->
+<header class="sticky top-0 z-50 bg-plywood/90 backdrop-blur border-b border-walnut/10">
+  <div class="max-w-6xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
+    <a href="#top" class="font-display font-bold text-lg tracking-tight focus-ring rounded">
+      <img src="/images/logo.png" alt="MakersCon PH logo" class="w-12 inline-block mr-2 -mt-1">
+    </a>
+    <nav class="hidden md:flex items-center gap-8 tag text-walnut/70">
+      <a href="#about" class="hover:text-walnut focus-ring rounded">ABOUT</a>
+      <a href="#schedule" class="hover:text-walnut focus-ring rounded">SCHEDULE</a>
+      <a href="#speakers" class="hover:text-walnut focus-ring rounded">SPEAKERS</a>
+      <a href="#venue" class="hover:text-walnut focus-ring rounded">VENUE</a>
+    </nav>
+    <a href="#register" class="tag bg-walnut text-plywood px-4 py-2 rounded-sm hover:bg-primaryBlue hover:text-walnut transition-colors focus-ring">
+      REGISTER
+    </a>
+  </div>
+</header>
+
+<div id="top">
+
+<!-- ===== HERO ===== -->
+<section class="cut-grid relative overflow-hidden border-b border-walnut/10">
+  <div class="max-w-6xl mx-auto px-6 md:px-12 py-20 md:py-28 grid lg:grid-cols-[1.2fr_1fr] gap-12 items-center">
+
+    <div>
+      <h1 class="font-display font-bold text-5xl sm:text-6xl md:text-7xl leading-[0.98]">
+        Sharing Knowledge.<br>
+        <span class="text-primaryBlue">Sharing Futures.</span>
+      </h1>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <div class="tag text-walnut/60 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 bg-accentYellow rounded-sm"></span>
+          NOV 12-13, 2026 · UP COLLEGE OF FINE ARTS, QUEZON CITY
+        </div>
+      </div>
+    </div>
+
+    <!-- Nesting sheet: modular squares, quarter circles, right triangles -->
+    <div class="relative aspect-square w-full max-w-md mx-auto kerf-outline rounded-sm p-4" role="img" aria-label="Decorative arrangement of laser-cut acrylic and wood shapes">
+      <div class="relative w-full h-full grid grid-cols-4 grid-rows-4 gap-3">
+
+        <!-- Square: amber acrylic -->
+        <div class="piece float-piece col-span-2 row-span-2 bg-primaryOrange/40 kerf-outline rounded-sm" style="--rot:0deg; --hover-transform: rotate(4deg) scale(1.04);"></div>
+
+        <!-- Quarter circle: sage -->
+        <div class="piece float-piece col-span-1 row-span-1 bg-accentYellow/50 kerf-outline" style="--rot:0deg; --hover-transform: scale(1.08); border-radius: 0 100% 0 0; animation-delay: 0.6s;"></div>
+
+        <!-- Square: walnut -->
+        <div class="piece float-piece col-span-1 row-span-1 bg-walnut kerf-outline-light rounded-sm" style="--rot:0deg; --hover-transform: rotate(-6deg); animation-delay: 1.2s;"></div>
+
+        <!-- Right triangle: coral -->
+        <div class="piece float-piece col-span-1 row-span-1 relative" style="--rot:0deg; --hover-transform: rotate(8deg); animation-delay: 0.3s;">
+          <div class="absolute inset-0 bg-primaryBlue/60" style="clip-path: polygon(0 0, 100% 0, 0 100%); border: 1.5px dashed rgba(61,53,46,0.35);"></div>
+        </div>
+
+        <!-- Square: plywood outline only -->
+        <div class="piece float-piece col-span-1 row-span-1 bg-plywood kerf-outline rounded-sm" style="--rot:0deg; --hover-transform: scale(0.92); animation-delay: 1.8s;"></div>
+
+        <!-- Quarter circle: amber, rotated -->
+        <div class="piece float-piece col-span-1 row-span-1 bg-primaryOrange/50 kerf-outline" style="--rot:180deg; --hover-transform: rotate(190deg); border-radius: 100% 0 0 0; transform: rotate(180deg); animation-delay: 0.9s;"></div>
+
+        <!-- Right triangle: sage, large -->
+        <div class="piece float-piece col-span-2 row-span-1 relative" style="--rot:0deg; --hover-transform: rotate(-5deg); animation-delay: 1.5s;">
+          <div class="absolute inset-0 bg-accentYellow/40" style="clip-path: polygon(100% 0, 100% 100%, 0 100%); border: 1.5px dashed rgba(61,53,46,0.35);"></div>
+        </div>
+
+        <!-- Square: coral small -->
+        <div class="piece float-piece col-span-1 row-span-1 bg-primaryBlue/40 kerf-outline rounded-sm" style="--rot:0deg; --hover-transform: rotate(10deg) scale(1.06); animation-delay: 0.4s;"></div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="relative py-24 md:py-32">
+  <div class="max-w-6xl mx-auto px-6 md:px-12">
+    <p class="tag text-primaryBlue mb-3">01 — ABOUT</p>
+    <div class="mt-12 grid md:grid-cols-2 gap-6">
+
+      <div class="lift-card bg-plywood kerf-outline rounded-sm p-6">
+        <div class="w-10 h-10 bg-primaryOrange/50 kerf-outline rounded-sm mb-5"></div>
+        <h3 class="font-display font-semibold text-xl mb-2">About MakersCon PH</h3>
+        <p class="text-walnut/70 leading-relaxed">
+          MakersCon PH is an annual gathering of makers, innovators, educators, hobbyists, and FABLABs from across the Philippines to share ideas, projects, and collaborations.
+          This year’s convention is hosted by the UP CFA FABLAB as it celebrates 10 years of making, learning, and community-building.
+
+        </p>
+      </div>
+
+      <div class="lift-card bg-plywood kerf-outline rounded-sm p-6">
+        <div class="w-10 h-10 bg-accentYellow/50 kerf-outline mb-5" style="border-radius: 0 100% 0 0;"></div>
+        <h3 class="font-display font-semibold text-xl mb-2">About the UP CFA FabLab</h3>
+        <p class="text-walnut/70 leading-relaxed">
+          The UP CFA FabLab is a learning and prototyping space that provides access to digital fabrication and creative technologies for students, communities, MSMEs, and emerging makers.<br>
+          Guided by art and design principles, the lab supports creative experimentation, collaboration, and impact-driven making through both traditional and digital fabrication.<br>
+          As a founding member of FabLabs PH and part of the global FabLab network, the UP CFA FabLab continues to connect local makers to a wider international community.
+
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== SCHEDULE ===== -->
+<section id="schedule" class="relative py-24 md:py-32 bg-plywood cut-grid border-t border-walnut/10">
+  <div class="max-w-6xl mx-auto px-6 md:px-12">
+    <p class="tag text-primaryOrange mb-3">02 — SCHEDULE</p>
+    <h2 class="font-display font-bold text-3xl md:text-5xl mb-4">Two days full of engaging sessions</h2>
+    <p class="text-plywood/60 mb-12 max-w-md">Tap a day to open its panel.</p>
+
+    <div class="space-y-4" id="schedule-accordion">
+
+      <!-- Day 1 -->
+      <div class="kerf-outline-light rounded-sm overflow-hidden">
+        <button class="day-toggle w-full flex items-center justify-between gap-4 px-5 py-4 text-left focus-ring" aria-expanded="true" aria-controls="day1-panel">
+          <span class="font-display font-semibold text-lg flex items-center gap-3">
+            <span class="tag bg-primaryBlue text-walnut px-2.5 py-1 rounded-sm">DAY 1</span>
+            Thursday, Nov 12 — Transcending Design Beyond Borders
+          </span>
+          <span class="chevron text-primaryOrange text-2xl leading-none">+</span>
+        </button>
+        <div id="day1-panel" class="day-panel" style="max-height: 320px;">
+          <div class="divide-y divide-plywood/10 px-5 pb-5">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 py-3">
+              <span class="tag w-32 shrink-0">09:00–10:00</span>
+              <span class="font-medium">Registration &amp; coffee</span>
             </div>
-        </div>
-    </section>
-    
-    <section id="about" class="about" style="background-image: url('images/sparks_01.jpg'); background-size: cover; background-position: center;">
-        <div class="section">
-            <h2>About</h2>
-        </div>
-    </section>
-    
-    <section id="events">
-        <div class="section">
-            <h2>Events</h2>
-            <div class="cards">
-                <div class="card">
-                    <h3>Talks</h3>
-                    <p>[talks description]</p>
-                </div>
-                <div class="card">
-                    <h3>Workshops</h3>
-                    <p>[workshops description]</p>
-                </div>
-                <div class="card">
-                    <h3>Exhibitions</h3>
-                    <p>[exhibitions description]</p>
-                </div>
-                <div class="card">
-                    <h3>Latagan</h3>
-                    <p>[latagan description]</p>
-                </div>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 py-3">
+              <span class="tag w-32 shrink-0">10:00–11:00</span>
+              <span class="font-medium">Opening keynote</span>
             </div>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 py-3">
+              <span class="tag w-32 shrink-0">11:30–13:00</span>
+              <span class="font-medium">Opening of Exhibitions and Maker showcase</span>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 py-3">
+              <span class="tag w-32 shrink-0">14:00–17:00</span>
+              <span class="font-medium">Panel Talks</span>
+            </div>
+          </div>
         </div>
-    </section>
-    
-    <footer id="contact">
-        <p>&copy; 2026 MakersCon PH. All rights reserved.</p>
-    </footer>
+      </div>
+
+      <!-- Day 2 -->
+      <div class="kerf-outline-light rounded-sm overflow-hidden">
+        <button class="day-toggle w-full flex items-center justify-between gap-4 px-5 py-4 text-left focus-ring" aria-expanded="false" aria-controls="day2-panel">
+          <span class="font-display font-semibold text-lg flex items-center gap-3">
+            <span class="tag bg-primaryOrange text-walnut px-2.5 py-1 rounded-sm">DAY 2</span>
+            Friday, Nov 13 — Komunidad Ko’y Komunidad Mo Rin
+          </span>
+          <span class="chevron text-primaryOrange text-2xl leading-none">+</span>
+        </button>
+        <div id="day2-panel" class="day-panel" style="max-height: 0;">
+          <div class="divide-y divide-plywood/10 px-5 pb-5">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 py-3">
+              <span class="tag w-32 shrink-0">09:00–12:00</span>
+              <span class="font-medium">Talks</span>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 py-3">
+              <span class="tag w-32 shrink-0">13:00–15:00</span>
+              <span class="font-medium">Talks and workshops</span>
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 py-3">
+              <span class="tag w-32 shrink-0">15:30–18:00</span>
+              <span class="font-medium">Awarding and closing remarks</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SPEAKERS ===== -->
+<section id="speakers" class="relative py-24 md:py-32">
+  <div class="max-w-6xl mx-auto px-6 md:px-12">
+    <p class="tag text-primaryBlue mb-3">03 — SPEAKERS</p>
+    <h2 class="font-display font-bold text-3xl md:text-5xl mb-12">Meet Our Speakers</h2>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="lift-card bg-walnut text-plywood kerf-outline-light rounded-sm p-6">
+        <div class="w-12 h-12 bg-primaryOrange/60 kerf-outline-light rounded-sm mb-4"></div>
+        <h3 class="font-display font-semibold text-lg">Tomas </h3>
+        <p class="tag text-plywood/60 mt-1">Director, FABLAB Bali</p>
+      </div>
+
+      <div class="lift-card bg-walnut text-plywood kerf-outline-light rounded-sm p-6">
+        <div class="relative w-12 h-12 mb-4">
+          <div class="absolute inset-0 bg-accentYellow/60" style="clip-path: polygon(0 0, 100% 0, 0 100%); border: 1.5px dashed rgba(232,220,200,0.35);"></div>
+        </div>
+        <h3 class="font-display font-semibold text-lg">Kohshi </h3>
+        <p class="tag text-plywood/60 mt-1">Engineer, Toyota Motors Corporation</p>
+      </div>
+
+      <div class="lift-card bg-walnut text-plywood kerf-outline-light rounded-sm p-6">
+        <div class="w-12 h-12 bg-primaryBlue/60 kerf-outline-light mb-4" style="border-radius: 0 100% 0 0;"></div>
+        <h3 class="font-display font-semibold text-lg">Jill </h3>
+        <p class="tag text-plywood/60 mt-1">Social Innovator and Researcher</p>
+      </div>
+
+      <div class="lift-card bg-walnut text-plywood kerf-outline-light rounded-sm p-6">
+        <div class="w-12 h-12 bg-primaryOrange/60 kerf-outline-light rounded-sm mb-4"></div>
+        <h3 class="font-display font-semibold text-lg">Mica </h3>
+        <p class="tag text-plywood/60 mt-1">Founder, Plastics by Manila Automat</p>
+      </div>
+
+      <div class="lift-card kerf-outline-light rounded-sm p-6 flex items-center justify-center text-center">
+        <p class="tag text-walnut/50">More speakers<br>announced soon</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== VENUE ===== -->
+<section id="venue" class="relative py-24 md:py-32 bg-plywood cut-grid border-t border-walnut/10">
+  <div class="max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-12 items-start">
+    <div>
+      <p class="tag text-primaryBlue mb-3">04 — VENUE</p>
+      <h2 class="font-display font-bold text-3xl md:text-5xl mb-6">UP College of Fine Arts</h2>
+      <p class="text-walnut/70 leading-relaxed max-w-md">
+        The UP College of Fine Arts is a historic institution in the heart of
+        Diliman. It houses the UP CFA FabLab and the UP Fine Arts Gallery (Parola), which will host the most of the talks and workshops. 
+      </p>
+    </div>
+    <div class="kerf-outline rounded-sm p-6 text-sm space-y-3 bg-walnut text-plywood">
+      <div class="flex justify-between border-b border-plywood/10 pb-3">
+        <span class="text-plywood/50">DATES</span>
+        <span>Nov 12-13, 2026</span>
+      </div>
+      <div class="flex justify-between border-b border-plywood/10 pb-3">
+        <span class="text-plywood/50">ADDRESS</span>
+        <span class="text-right">University of the Philippines Diliman,<br>Quezon City, Metro Manila</span>
+      </div>
+      <div class="flex justify-between border-b border-plywood/10 pb-3">
+        <span class="text-plywood/50">CAPACITY</span>
+        <span>500 attendees</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REGISTER / CTA ===== -->
+<section id="register" class="relative py-24 md:py-32 cut-grid">
+  <div class="max-w-6xl mx-auto px-6 md:px-12 text-center">
+    <p class="tag text-primaryBlue mb-3">05 — REGISTRATION</p>
+    <h2 class="font-display font-bold text-4xl md:text-6xl max-w-2xl mx-auto leading-tight">
+      Register today!
+    </h2>
+    <p class="mt-6 text-walnut/70 max-w-md mx-auto">
+      Slots are limited. Invited institutions are encouraged to pre-register by May _.<br>
+      Delegate Packages<br>
+      1 Delegate: ₱150<br>
+      3 Delegates: ₱350<br>
+      5 Delegates: ₱500<br>
+      <br>
+      Includes both days of talks, workshops, and maker floor access.
+    </p>
+    <a href="#" class="inline-block mt-10 bg-walnut text-plywood font-display font-semibold px-10 py-4 rounded-sm hover:bg-primaryBlue hover:text-walnut transition-colors focus-ring">
+      Register now
+    </a>
+  </div>
+</section>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bg-walnut text-plywood/60 py-10">
+  <div class="max-w-6xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 tag">
+    <span>MAKERSCON PH 2026</span>
+    <span>MAKERSCONPH2026@GMAIL.COM</span>
+  </div>
+</footer>
+
+<script>
+  // Schedule accordion
+  document.querySelectorAll('.day-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      const panel = document.getElementById(btn.getAttribute('aria-controls'));
+      if (expanded) {
+        panel.style.maxHeight = '0px';
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Set initial open panel height correctly after layout
+  window.addEventListener('load', () => {
+    const openPanel = document.querySelector('.day-toggle[aria-expanded="true"]');
+    if (openPanel) {
+      const panel = document.getElementById(openPanel.getAttribute('aria-controls'));
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+  });
+</script>
+
 </body>
 </html>
