@@ -25,24 +25,26 @@ const { title } = Astro.props;
       content="MakersConPH 2026"
     />
 
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+
     <title>{title}</title>
   </head>
 
   <body class="font-sans antialiased">
     <main id="event-shell" class="min-h-screen">
 
-      <!-- LEFT / SPLASH -->
+      <!-- VISUAL -->
       <div
         id="visual-panel"
-        class="fixed inset-0 z-20 w-full transition-[width] duration-700 ease-[cubic-bezier(.22,1,.36,1)] lg:w-full"
+        class="relative z-20 h-svh w-full lg:fixed lg:inset-0 lg:w-full"
       >
         <EventVisual />
       </div>
 
-      <!-- RIGHT / CONTENT -->
+      <!-- CONTENT -->
       <div
         id="content-panel"
-        class="relative min-h-screen lg:ml-[50vw]"
+        class="relative min-h-screen w-full lg:ml-[50vw] lg:w-[50vw]"
       >
         <RightScroll />
       </div>
