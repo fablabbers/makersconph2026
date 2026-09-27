@@ -1,0 +1,415 @@
+
+---
+---
+
+<aside
+  class="
+    sticky
+    top-0
+    h-svh
+    w-full
+    overflow-hidden
+    bg-paper
+  "
+>
+  <div
+    class="
+      relative
+      flex
+      h-full
+      flex-col
+      justify-between
+      p-5
+      md:p-7
+    "
+  >
+
+    <!-- TOP -->
+    <div
+      class="
+        relative
+        z-20
+        flex
+        justify-between
+        text-[10px]
+        font-semibold
+        uppercase
+        tracking-[0.12em]
+      "
+    >
+      <span>12-13 NOV 2026</span>
+      <span>UP FINE ARTS GALLERY, QUEZON CITY, PH</span>
+    </div>
+
+
+    <!-- GENERATIVE GRID -->
+    <!--<div
+      class="
+        absolute
+        inset-0
+        flex
+        items-center
+        justify-center
+        group
+      "
+    > -->
+    <div class="flex flex-1 items-center justify-center">
+      <svg
+        id="tile-art"
+        viewBox="0 0 600 600"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-label="Generative geometric artwork"
+      >
+      <!--<svg
+        id="tile-art"
+        viewBox="0 0 600 600"
+        class="h-auto w-[80%] max-w-[600px]"
+        aria-hidden="true"
+      ></svg> -->
+      </svg>
+    </div>
+
+
+    <!-- TITLE -->
+    <div
+      class="
+        absolute
+        left-5
+        top-1/2
+        z-10
+        -translate-y-1/2
+        md:left-7
+      "
+    >
+      <img src="/public/logo_hero.svg" alt="MakersCon PH 2026" class="h-20 w-auto md:h-24" />
+      <p class="mt-7 text-sm leading-tight">
+        Sharing Knowledge, Sharing Futures
+      </p>
+    </div>
+
+    <!-- SECTION MENU -->
+    <nav
+      aria-label="Main navigation"
+      class="
+        absolute
+        bottom-20
+        left-5
+        z-30
+        md:left-7
+      "
+    >
+      <ul
+        class="
+          flex
+          flex-col
+          gap-2
+          text-xs
+          font-semibold
+          uppercase
+          tracking-[0.08em]
+        "
+      >
+
+        <li>
+          <a
+            href="#about"
+            class="
+              group
+              flex
+              items-center
+              gap-2
+              transition-opacity
+              hover:opacity-50
+            "
+          >
+            <span
+              class="
+                h-1.5
+                w-1.5
+                rounded-full
+                bg-black
+                opacity-0
+                transition-opacity
+                group-hover:opacity-100
+              "
+            ></span>
+
+            <span>01 — About</span>
+          </a>
+        </li>
+
+
+        <li>
+          <a
+            href="#speakers"
+            class="
+              group
+              flex
+              items-center
+              gap-2
+              transition-opacity
+              hover:opacity-50
+            "
+          >
+            <span
+              class="
+                h-1.5
+                w-1.5
+                rounded-full
+                bg-black
+                opacity-0
+                transition-opacity
+                group-hover:opacity-100
+              "
+            ></span>
+
+            <span>02 — Talks & Workshops</span>
+          </a>
+        </li>
+
+
+        <li>
+          <a
+            href="#schedule"
+            class="
+              group
+              flex
+              items-center
+              gap-2
+              transition-opacity
+              hover:opacity-50
+            "
+          >
+            <span
+              class="
+                h-1.5
+                w-1.5
+                rounded-full
+                bg-black
+                opacity-0
+                transition-opacity
+                group-hover:opacity-100
+              "
+            ></span>
+
+            <span>03 — Schedule</span>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+
+
+
+
+    <!-- BOTTOM -->
+    <div
+      class="
+        relative
+        z-20
+        flex
+        justify-between
+        text-[10px]
+        font-semibold
+        uppercase
+        tracking-[0.12em]
+      "
+    >
+      <span>SCROLL ↓</span>
+    </div>
+
+  </div>
+</aside>
+
+
+<script>
+  const svg =
+    document.querySelector<SVGSVGElement>("#tile-art");
+
+  if (!svg) {
+    throw new Error("Tile SVG not found");
+  }
+
+  const SVG_NS =
+    "http://www.w3.org/2000/svg";
+
+  const palette = [
+    "#111111",
+    "#ff5c5c",
+    "#f5c542",
+    "#3d8bfd",
+    "#f15bb5",
+    "#55c78a"
+  ];
+
+  //const columns = 6;
+  const columns = window.innerWidth > 500 ? 12 : 6;
+  const rows = 6;
+  const size = window.innerWidth / columns;
+
+
+  class Tile {
+    x: number;
+    y: number;
+    size: number;
+    type: "square" | "quarter" | "triangle";
+    orientation: number;
+    color: string;
+
+    constructor(x: number, y: number, size: number) {
+      this.x = x;
+      this.y = y;
+      this.size = size;
+
+      this.type =
+        ["square", "quarter", "triangle"][
+          Math.floor(Math.random() * 3)
+        ];
+
+      this.orientation =
+        Math.floor(Math.random() * 4);
+
+      this.color =
+        palette[
+          Math.floor(
+            Math.random() * palette.length
+          )
+        ];
+    }
+  }
+
+
+  function createTile(tile: Tile): SVGGElement {
+    const group =
+      document.createElementNS(
+        SVG_NS,
+        "g"
+      );
+
+    group.setAttribute(
+      "transform",
+      `
+        translate(${tile.x} ${tile.y})
+        rotate(
+          ${tile.orientation * 90}
+          ${tile.size / 2}
+          ${tile.size / 2}
+        )
+      `
+    );
+
+    group.setAttribute(
+      "style",
+      "opacity: 0; transition: opacity 1400ms ease-out;"
+    );
+
+    group.addEventListener("mouseenter", () => {
+      group.style.transition = "opacity 10ms ease-in";
+      group.style.opacity = "1";
+    });
+
+    group.addEventListener("mouseleave", () => {
+      group.style.transition = "opacity 1400ms ease-out";
+      group.style.opacity = "0";
+    });
+
+
+    if (tile.type === "square") {
+      const rect =
+        document.createElementNS(
+          SVG_NS,
+          "rect"
+        );
+
+      rect.setAttribute(
+        "width",
+        tile.size
+      );
+
+      rect.setAttribute(
+        "height",
+        tile.size
+      );
+
+      rect.setAttribute(
+        "fill",
+        tile.color
+      );
+
+      group.appendChild(rect);
+    }
+
+
+    if (tile.type === "triangle") {
+      const triangle =
+        document.createElementNS(
+          SVG_NS,
+          "polygon"
+        );
+
+      triangle.setAttribute(
+        "points",
+        `
+          0,0
+          ${tile.size},0
+          0,${tile.size}
+        `
+      );
+
+      triangle.setAttribute(
+        "fill",
+        tile.color
+      );
+
+      group.appendChild(triangle);
+    }
+
+
+    if (tile.type === "quarter") {
+      const path =
+        document.createElementNS(
+          SVG_NS,
+          "path"
+        );
+
+      path.setAttribute(
+        "d",
+        `
+          M 0 0
+          A ${tile.size} ${tile.size}
+          0 0 1
+          ${tile.size} ${tile.size}
+          L 0 ${tile.size}
+          Z
+        `
+      );
+
+      path.setAttribute(
+        "fill",
+        tile.color
+      );
+
+      group.appendChild(path);
+    }
+
+
+    return group;
+  }
+
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < columns; col++) {
+
+      const tile = new Tile(
+        col * size,
+        row * size,
+        size
+      );
+
+      svg.appendChild(
+        createTile(tile)
+      );
+    }
+  }
+</script>
+

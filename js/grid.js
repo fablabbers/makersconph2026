@@ -63,7 +63,7 @@ function draw(){
             const x = c*cellSize;
             const y = r*cellSize;
             // subtle grid lines
-            stroke(235);
+            stroke(74, 144, 224, 50);
             strokeWeight(1);
             noFill();
             rect(x+0.5,y+0.5,cellSize-1,cellSize-1);

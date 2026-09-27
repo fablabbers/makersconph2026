@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+
+    /* CSS */
+
+    body {
+        margin:0;
+        overflow:hidden;
+        background:#f4f1ea;
+    }
+
+    svg{
+        width:100vw;
+        height:100vh;
+    }
+
+    .tile{
+        transform-box: fill-box;
+        transform-origin: center;
+        animation-duration: 600ms;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease;
+    }
+
+    .rect{
+        animation-name: tile-slide-wipe;
+    }
+
+    .tri{
+        animation-name: tile-slide-diagonal-wipe;
+    }
+
+    .quarter{
+        animation-name: tile-rotate-wipe;
+    }
+
+    @keyframes tile-slide-wipe {
+        from {
+            transform: translateX(calc(var(--dir) * 120px)) scaleX(0);
+        }
+        to {
+            transform: translateX(0) scaleX(1);
+        }
+    }
+
+    @keyframes tile-slide-diagonal-wipe {
+        from {
+            transform: translate(var(--dx), var(--dy)) scaleX(0);
+        }
+        to {
+            transform: translate(0, 0) scaleX(1);
+        }
+    }
+
+    @keyframes tile-rotate-wipe {
+        from {
+            transform: rotate(-90deg) scale(0);
+        }
+        to {
+            transform: rotate(0deg) scale(1);
+        }
+    }
+
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <p>This is a simple HTML page.</p>
+
+    <svg id="artboard"></svg>
+
+    <script src="/js/gsap.min.js"></script>
+    <script>
+        const svg = document.getElementById("artboard");
+        const ns = "http://www.w3.org/2000/svg";
+        const cell = 60;
+        const cols = 3;
+        const rows = 3;
+
+        svg.setAttribute("viewBox", `0 0 ${cols * cell} ${rows * cell}`);
+        svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+        const defs = document.createElementNS(ns, "defs");
+        svg.appendChild(defs);
+
+        /*function createClipPath(id, x, y) {
+            const clipPath = document.createElementNS(ns, "clipPath");
+            clipPath.setAttribute("id", id);
+            clipPath.setAttribute("clipPathUnits", "userSpaceOnUse");
+            const rect = document.createElementNS(ns, "rect");
+            rect.setAttribute("x", x);
+            rect.setAttribute("y", y);
+            rect.setAttribute("width", cell);
+            rect.setAttribute("height", cell);
+            clipPath.appendChild(rect);
+            return clipPath;
+        }*/
+
+        function createRect(x, y) {
+            /*const rect = document.createElementNS(ns, "rect");
+            rect.setAttribute("x", x);
+            rect.setAttribute("y", y);
+            rect.setAttribute("width", cell);
+            rect.setAttribute("height", cell);
+            rect.classList.add("tile", "rect");
+            return rect;*/
+            const rect = document.createElementNS(ns, "path");
+            rect.setAttribute("d", `M${x} ${y} H${x + cell} V${y + cell} H${x} Z`);
+            //rect.classList.add("tile", "r");
+            return rect;
+        }
+
+        function createTri(x, y) {
+            const tri = document.createElementNS(ns, "polygon");
+            tri.setAttribute("points", `${x} ${y}, ${x + cell} ${y + cell}, ${x} ${y + cell}`);
+            //tri.classList.add("tile", "t");
+            return tri;
+        }
+
+        function createQuarter(x, y) {
+            const quarter = document.createElementNS(ns, "path");
+            quarter.setAttribute("d", `M${x + cell} ${y} A${cell} ${cell} 0 0 0 ${x} ${y + cell} L${x + cell} ${y + cell} Z`);
+            //quarter.classList.add("tile", "q");
+            return quarter;
+        }
+
+        function addAnimation(shape, type, x, y, delay) {
+            // set initial state per type
+            if (type === "rect") {
+                const dir = Math.random() < 0.5 ? -1 : 1;
+                gsap.set(shape, { transformOrigin: '50% 50%', x: dir * 120, scaleX: 0 });
+                gsap.to(shape, { duration: 1.6, delay: delay / 1000, x: 0, scaleX: 1, ease: 'power2.out' });
+            } else if (type === "tri") {
+                const fromNegative = (((x / cell) + (y / cell)) % 2 === 0);
+                const dx = fromNegative ? -60 : 60;
+                const dy = fromNegative ? -60 : 60;
+                gsap.set(shape, { transformOrigin: '50% 50%', x: dx, y: dy, scaleX: 0 });
+                gsap.to(shape, { duration: 1.6, delay: delay / 1000, x: 0, y: 0, scaleX: 1, ease: 'power2.out' });
+            } else if (type === "quarter") {
+                gsap.set(shape, { transformOrigin: '50% 50%', rotation: -90, scale: 0 });
+                gsap.to(shape, { duration: 1.6, rotation: 0, scale: 1, ease: 'power2.out' });
+            }
+        }
+
+        const shapeBuilders = [
+            { build: createRect, type: "rect" },
+            { build: createTri, type: "tri" },
+            { build: createQuarter, type: "quarter" }
+            
+        ];
+
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                const x = col * cell;
+                const y = row * cell;
+                const builder = shapeBuilders[Math.floor(Math.random() * shapeBuilders.length)];
+                const shape = builder.build(x, y);
+                svg.appendChild(shape);
+                addAnimation(shape, builder.type, x, y, 0);
+            }
+        }
+    </script>
+</body>
+</html>

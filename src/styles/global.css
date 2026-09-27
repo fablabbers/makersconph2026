@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Inter", sans-serif;
+  --font-sans: "Inter", sans-serif;
+
+  --color-paper: #f2efe7;
+  --color-ink: #2B2B2B;
+  --color-riso-orange: #F57D0D;
+  --color-riso-yellow: #EFD400;
+  --color-riso-blue: #4A90E0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  background: var(--color-riso-blue);
+  color: var(--color-paper);
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+#tile-art {
+  width: min(80%, 600px);
+  height: auto;
+}
+
+.tile {
+  transform-box: fill-box;
+  transform-origin: center;
+}
