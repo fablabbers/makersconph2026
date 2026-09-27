@@ -5,8 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://www.fablabbers.github.io",
-  base: "/makersconph2026",
+  site: "https://makersconph2026.com",
   vite: {
     plugins: [tailwindcss()],
   },
