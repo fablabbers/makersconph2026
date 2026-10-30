@@ -1,0 +1,189 @@
+---
+/*const tiles = [
+  "square", "triangle", "quarter", "square", "triangle", "quarter",
+  "triangle", "square", "quarter", "triangle", "square", "quarter",
+  "quarter", "triangle", "square", "quarter", "triangle", "square",
+  "square", "quarter", "triangle", "square", "quarter", "triangle",
+  "triangle", "square", "quarter", "triangle", "square", "quarter",
+  "quarter", "triangle", "square", "quarter", "triangle", "square"
+];*/
+
+const colors = [
+  //"#111111",
+  "#f57d0d",
+  "#3d8bfd"
+];
+
+const tileCount = 36;
+
+const shapes = ["square", "triangle", "quarter"];
+
+const randomTile = () => ({
+  type: shapes[Math.floor(Math.random() * shapes.length)],
+  color: colors[Math.floor(Math.random() * colors.length)],
+  delay: Math.random() * 2.4
+});
+
+const tiles = Array.from(
+  { length: tileCount },
+  randomTile
+);
+
+const destination = "https://linktr.ee/MCPH2026";
+---
+
+<div
+  id="event-splash"
+  class="fixed inset-0 z-[100] flex h-[100svh] w-full items-center justify-center overflow-hidden bg-[#f2efe7]"
+>
+  <!-- Animated geometric grid -->
+  <div class="tile-grid" aria-hidden="true">
+    <div class="tile-grid" aria-hidden="true">
+        {tiles.map((tile) => (
+            <div class="tile">
+            <div
+                class={`shape ${tile.type}`}
+                style={`--tile-color:${tile.color}; --delay:${tile.delay}s;`}
+            />
+            </div>
+        ))}
+        </div>
+  </div>
+
+  <!-- Text overlay -->
+  <div class="splash-text">
+    <h1>
+      TAKING YOU TO<br />
+      <span>MAKERSCON LINKTREE</span>
+    </h1>
+
+    <div class="loading-line">
+      <div class="loading-progress"></div>
+    </div>
+
+    
+  </div>
+
+  <div class="continue-link">
+    <a
+        href={destination}
+        class="continue-link"
+        aria-label="Continue to Makerscon Linktree"
+    >
+        CLICK TO CONTINUE ↗
+    </a>
+    </div>
+  
+</div>
+
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+    body {
+        font-family: "Inter", sans-serif;
+    }
+
+    .tile-grid {
+    position: absolute;
+    width: min(90vw, 90vh);
+    aspect-ratio: 1 / 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+    gap: 5px;
+    }
+
+    .tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .shape {
+    width: 100%;
+    height: 100%;
+    background: var(--tile-color);
+    opacity: 0;
+    animation: tile-fade 2.4s ease-in-out infinite;
+    animation-delay: var(--delay);
+    }
+
+    .triangle {
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    }
+
+    .quarter {
+    border-radius: 100% 0 0 0;
+    }
+
+    @keyframes tile-fade {
+    0%, 100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+    }
+
+    .splash-text {
+        font-family: "Inter", sans-serif;
+        position: relative;
+        z-index: 2;
+        
+        max-width: 700px;
+        padding: 16px;
+        text-align: center;
+        background: #f2efe7;
+        border: 0px solid #111;
+        color: #f57d0d;
+        animation: text-fade 0.8s ease forwards;
+        display:block;
+    }
+
+    .continue-link {
+        position: absolute;
+        z-index: 3;
+        bottom: 24px;
+        right: 24px;
+
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .16em;
+
+        color: #111;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+
+    @keyframes text-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+    .shape {
+        animation: none;
+        opacity: 1;
+    }
+    .continue-link {
+        bottom: 18px;
+        right: 18px;
+        width: auto;
+        text-align: right;
+    }
+}
+
+</style>
+
+<script>
+  const destination = "https://linktr.ee/MCPH2026";
+
+  const timer = window.setTimeout(() => {
+    window.location.href = destination;
+  }, 4000);
+</script>
